@@ -13,12 +13,12 @@
 jQuery.noConflict();
 jQuery(document).ready(function(){
 	jQuery('#refresh-captcha').on('click', function(e){
-                jQuery('#captcha').attr("src","./php/newCaptcha.php?rnd=" + Math.random());
+                jQuery('#captcha').attr("src","./captcha/newCaptcha.php?rnd=" + Math.random());
 	});
 	jQuery('#validar').click(function () {
 		jQuery.ajax({
       		type: "POST",
-      		url: "./verificaCodeCapt.php",
+      		url: "./captcha/verificaCodeCapt.php",
       		dataType: "json",
       		data: { 'code':jQuery('input#captcha').val() },
       		success: function (response) {
