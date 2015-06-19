@@ -20,7 +20,7 @@ jQuery(document).ready(function(){
       		type: "POST",
       		url: "./captcha/verificaCodeCapt.php",
       		dataType: "json",
-      		data: { 'code':jQuery('input#captcha').val() },
+      		data: { 'code':jQuery('input#captcha').val() }, 
       		success: function (response) {
         			
         			if(response.resp === 'Incorreto'){
