@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Captcha jQuery PHP</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        
+<script>
+
+jQuery.noConflict();
+jQuery(document).ready(function(){
+	jQuery('#refresh-captcha').on('click', function(e){
+                jQuery('#captcha').attr("src","./captcha/newCaptcha.php?rnd=" + Math.random());
+	});
+	jQuery('#validar').click(function () {
+		jQuery.ajax({
+      		type: "POST",
+      		url: "./captcha/verificaCodeCapt.php",
+      		dataType: "json",
+      		data: { 'code':jQuery('input#captcha').val() }, 
+      		success: function (response) {
+        			
+        			if(response.resp === 'Incorreto'){
+        				jQuery('#errorCode').html("<span style='color:red;'>Codigo Inválido</span>");
+        				jQuery('input#captcha').val('').focus();
+        			}else {
+        				jQuery('#errorCode').html("<span style='color:blue;'>Codigo OK</span>");
+        			}
+        			
+      		},
+      		error: function (xhr, ajaxOptions, thrownError) {
+        			alert(xhr.status);
+        			alert(thrownError);
+      		}
+    	});
+	});
+});
+
+
+</script>        
+    </head>
+<body>
+	
+	
+	<p>
+		<form method="post" >
+			
+			<div id="captcha-wrap">
+    		<img src="./img/refresh.png" width="35" alt="refresh captcha" id="refresh-captcha" /> <img src="./captcha/newCaptcha.php" alt="" id="captcha" />
+			<br>
+			<input class="narrow text input" id="captcha" name="captcha" type="text" placeholder="Verification Code" required />
+			<span id="errorCode"></span>
+			<br><br>
+			<input type="button" id="validar" value="Enviar">
+			<br>
+			</div>
+		</form>
+	</p>
+
+</body>
+
+</html>
